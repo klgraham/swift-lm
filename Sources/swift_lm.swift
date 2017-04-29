@@ -3,6 +3,8 @@ import Foundation
 
 struct Constants {
     static let alphanumericChars = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890".characters)
+    
+    static let letters = Set("abcdefghijklmnopqrstuvwxyz".characters)
 }
 
 
@@ -111,8 +113,69 @@ struct UnigramModel {
         wordCounts = countWordsIn(words)
     }
     
+    private func vocabContains(_ word: String) -> Bool {
+        if let _ = wordCounts[word] {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func getWordsOffByOneCharacter(from word: String) -> Set<String> {
+        var edits = [String]()
+        
+        var splits = [(String, String)]()
+        for i in 0...(word.characters.count) {
+            splits.append(split(word: word, at: i))
+        }
+        
+        for (left, right) in splits {
+            if !right.isEmpty {
+                // deletions
+                edits.append(left + deleteChar(at: 0, from: right))
+                
+                // swap adjacent letters
+                edits.append(left + swapChars(at: 0, and: 1, of: right))
+                
+                
+                for letter in Constants.letters {
+                    // insertions
+                    edits.append(left + String(letter) + right)
+
+                    // replacements
+                    edits.append(left + replaceChar(at: 0, from: right, with: letter))
+                }
+            }
+        }
+        
+        return Set(edits)
+    }
+    
+    func getWordsOffByTwoCharacters(from word: String) -> Set<String> {
+        var edits = [String]()
+        
+        for e1 in getWordsOffByOneCharacter(from: word) {
+            for e2 in getWordsOffByOneCharacter(from: e1) {
+                edits.append(e2)
+            }
+        }
+        
+        return Set(edits)
+    }
+    
     func generateCorrectionCandidates(of word: String) -> [String] {
-        return [String]()
+        var candidates = [String]()
+        
+        let knownEdits1 = getWordsOffByOneCharacter(from: word).filter { vocabContains($0) }
+        let knownEdits2 = getWordsOffByTwoCharacters(from: word).filter { vocabContains($0) }
+        candidates.append(contentsOf: knownEdits1)
+        candidates.append(contentsOf: knownEdits2)
+        
+        if vocabContains(word) {
+            candidates.append(word)
+        }
+        
+        return candidates
     }
     
     func getTopCorrectionsFor(_ word: String) -> [String] {
