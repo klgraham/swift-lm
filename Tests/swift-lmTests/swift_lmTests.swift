@@ -16,10 +16,11 @@ class swift_lmTests: XCTestCase {
         XCTAssertEqual(insert("$", into: "012345", at: 3), "012$345")
         
         XCTAssert(!loadCorpus(from: "Tests/swift-lmTests/test_corpus.txt").isEmpty)
-        XCTAssert(loadCorpus(from: "Tests/swift-lmTests/test_corpus.txt").contains("unmanned by the dark, Gared?\""))
+        XCTAssert(loadCorpus(from: "Tests/swift-lmTests/test_corpus.txt").contains("unmanned"))
         
         XCTAssertEqual(removeNonAlphanumericCharacters(from: "asdf$5^qwerty"), "asdf5qwerty")
         XCTAssertEqual(tokenize("I like cheese.\nDo you?"), ["i", "like", "cheese", "do", "you"])
+        XCTAssertEqual(countWordsIn(["i", "like", "like", "do", "do"]), ["like": 2, "do": 2, "i": 1])
     }
 
 
