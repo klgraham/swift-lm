@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		42BACCFB1EB4546E00CF359B /* StreamReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BACCFA1EB4546E00CF359B /* StreamReader.swift */; };
 		OBJ_20 /* swift_lm.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_8 /* swift_lm.swift */; };
 		OBJ_27 /* swift_lmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* swift_lmTests.swift */; };
 		OBJ_29 /* swift_lm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* swift_lm.framework */; };
@@ -23,6 +24,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		42BACCFA1EB4546E00CF359B /* StreamReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamReader.swift; sourceTree = "<group>"; };
+		42BACCFC1EB4566F00CF359B /* test_corpus.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test_corpus.txt; sourceTree = "<group>"; };
 		OBJ_11 /* swift_lmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swift_lmTests.swift; sourceTree = "<group>"; };
 		OBJ_13 /* swift_lm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = swift_lm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_14 /* swift_lmTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; name = swift_lmTests.xctest; path = "swift-lmTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_11 /* swift_lmTests.swift */,
+				42BACCFC1EB4566F00CF359B /* test_corpus.txt */,
 			);
 			name = "swift-lmTests";
 			path = "Tests/swift-lmTests";
@@ -82,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_8 /* swift_lm.swift */,
+				42BACCFA1EB4546E00CF359B /* StreamReader.swift */,
 			);
 			path = Sources;
 			sourceTree = SOURCE_ROOT;
@@ -161,6 +166,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
+				42BACCFB1EB4546E00CF359B /* StreamReader.swift in Sources */,
 				OBJ_20 /* swift_lm.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

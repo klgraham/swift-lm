@@ -16,6 +16,9 @@ class swift_lmTests: XCTestCase {
         XCTAssertEqual(swapChars(at: 2, and: 5, of: "01234567"), "01534267")
         XCTAssertEqual(replaceChar(at: 3, from: "012345", with: "?"), "012?45")
         XCTAssertEqual(insert("$", into: "012345", at: 3), "012$345")
+        
+        XCTAssert(!loadCorpus(from: "Tests/swift-lmTests/test_corpus.txt").isEmpty)
+        XCTAssert(loadCorpus(from: "Tests/swift-lmTests/test_corpus.txt").contains("unmanned by the dark, Gared?\""))
     }
 
 

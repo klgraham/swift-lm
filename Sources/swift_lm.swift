@@ -1,34 +1,27 @@
 
+import Foundation
 
 struct swift_lm {
 
     var text = "Hello, World!"
 }
 
-//protocol LanguageModel {
-//    /**
-//     Trains the language model on a corpus of text.
-//     
-//     - parameters:
-//     - corpus: The text the model will be trained on. Must be a String array. Each sentence starts with "\<s\>" and ends with "\<\/s\>"
-//     */
-//    mutating func train(on corpus: [String])
-//    
-//    /**
-//     Computes the conditional probability that a given text string occurs given
-//     that the text's context exists.
-//     
-//     - returns:
-//     A float representing P(text | context)
-//     
-//     - parameters:
-//     - text: The text we wish to know the probability of
-//     - context: The context that the text is in relation to. Can be nil.
-//     */
-//    func prob(of text: String, given context: [String]?) -> Float
-//    
-//    func dump()
-//}
+
+func loadCorpus(from path: String) -> [String] {
+    var lines = [String]()
+    
+    if let streamReader = StreamReader(path: path) {
+        defer {
+            streamReader.close()
+        }
+        
+        for line in streamReader {
+            lines.append(line)
+        }
+    }
+    
+    return lines
+}
 
 
 func getStringIndex(at index: Int, of text: String) -> String.Index {
