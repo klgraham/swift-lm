@@ -5,22 +5,6 @@ struct Constants {
     static let alphanumericChars = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890".characters)
 }
 
-func loadCorpus(from path: String) -> [String] {
-    var lines = [String]()
-    
-    if let streamReader = StreamReader(path: path) {
-        defer {
-            streamReader.close()
-        }
-        
-        for line in streamReader {
-            lines.append(line)
-        }
-    }
-    
-    return lines
-}
-
 
 func removeNonAlphanumericCharacters(from text: String) -> String {
     return String(text.characters.filter { Constants.alphanumericChars.contains($0) })
@@ -31,7 +15,22 @@ func tokenize(_ text: String) -> [String] {
     let words = text.components(separatedBy: .whitespacesAndNewlines)
     return words.flatMap { $0.components(separatedBy: "\t") }.map { removeNonAlphanumericCharacters(from: $0.lowercased()) }
 }
+
+func loadCorpus(from path: String) -> [String] {
+    var words = [String]()
     
+    if let streamReader = StreamReader(path: path) {
+        defer {
+            streamReader.close()
+        }
+        
+        for line in streamReader {
+            words.append(contentsOf: tokenize(line))
+        }
+    }
+    
+    return words
+}
 
 func getStringIndex(at index: Int, of text: String) -> String.Index {
     return text.index(text.startIndex, offsetBy: index)
@@ -87,4 +86,51 @@ func insert(_ c: Character, into text: String, at index: Int) -> String {
     var output = text
     output.insert(c, at: getStringIndex(at: index, of: text))
     return output
+}
+
+func countWordsIn(_ words: [String]) -> [String: Int] {
+    var wordCounts = [String: Int]()
+    
+    for word in words {
+        if let count = wordCounts[word] {
+            wordCounts[word] = count + 1
+        } else {
+            wordCounts[word] = 1
+        }
+    }
+    
+    return wordCounts
+}
+
+struct UnigramModel {
+    private var maxCorrections = 3
+    private let wordCounts: [String: Int]
+    
+    init(corpus path: String) {
+        let words = loadCorpus(from: path)
+        wordCounts = countWordsIn(words)
+    }
+    
+    func getTopCorrectionsFor(_ word: String) -> [String] {
+        var wordProbabilities = [String: Float]()
+        wordCounts.forEach { wordProbabilities[$0.key] = probabilityOf($0.key) }
+        let topWords = wordProbabilities.sorted(by: >).map { $0.key }
+        return Array(topWords.prefix(upTo: maxCorrections))
+    }
+    
+    var totalNumWords: Int {
+        var sum = 0
+        for count in wordCounts.values {
+            sum += count
+        }
+        return sum
+    }
+    
+    func probabilityOf(_ word: String) -> Float {
+        if let count = wordCounts[word] {
+            return Float(count) / Float(totalNumWords)
+        } else {
+            return 0
+        }
+    }
 }
