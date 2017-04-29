@@ -244,6 +244,10 @@ class SpellChecker {
         self.init(corpus: corpus, maxCorrections: 3)
     }
     
+    convenience init() {
+        self.init(corpus: "data/big.txt")
+    }
+    
     func getCorrectionsFor(_ word: String) -> [String] {
         return model.getCorrectionsFor(word)
     }

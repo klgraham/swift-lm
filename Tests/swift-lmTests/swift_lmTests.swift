@@ -28,7 +28,7 @@ class swift_lmTests: XCTestCase {
         XCTAssertEqual(unigramModel.getFrequencyOf("sam"), 2)
         XCTAssertEqual(unigramModel.probabilityOf("outrivaled"), 0)
         
-        let spellChecker = SpellChecker(corpus: "data/big.txt")
+        let spellChecker = SpellChecker()
         XCTAssert(spellChecker.getCorrectionsFor("librari").contains("library"))
         
         
