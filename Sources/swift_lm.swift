@@ -111,9 +111,15 @@ struct UnigramModel {
         wordCounts = countWordsIn(words)
     }
     
+    func generateCorrectionCandidates(of word: String) -> [String] {
+        return [String]()
+    }
+    
     func getTopCorrectionsFor(_ word: String) -> [String] {
+        let candidates = generateCorrectionCandidates(of: word)
+        
         var wordProbabilities = [String: Float]()
-        wordCounts.forEach { wordProbabilities[$0.key] = probabilityOf($0.key) }
+        candidates.forEach { wordProbabilities[$0] = probabilityOf($0) }
         let topWords = wordProbabilities.sorted(by: >).map { $0.key }
         return Array(topWords.prefix(upTo: maxCorrections))
     }
