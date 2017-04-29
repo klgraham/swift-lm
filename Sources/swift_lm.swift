@@ -200,7 +200,8 @@ struct UnigramModel {
         var wordProbabilities = [String: Float]()
         candidates.forEach { wordProbabilities[$0] = probabilityOf($0) }
         let topWords = wordProbabilities.sorted(by: >).map { $0.key }
-        return Array(topWords.prefix(upTo: maxCorrections))
+        let n = min(maxCorrections, topWords.count)
+        return Array(topWords.prefix(upTo: n))
     }
     
     var totalNumWords: Int {
