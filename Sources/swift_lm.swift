@@ -23,6 +23,12 @@ func loadCorpus(from path: String) -> [String] {
     return lines
 }
 
+func removeNonAlphanumericCharacters(from text: String) -> String {
+    let okayChars =
+        Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890".characters)
+//    Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890+-*=(),.:!_".characters)
+    return String(text.characters.filter {okayChars.contains($0) })
+}
 
 func getStringIndex(at index: Int, of text: String) -> String.Index {
     return text.index(text.startIndex, offsetBy: index)
