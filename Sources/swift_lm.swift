@@ -1,13 +1,8 @@
 
 import Foundation
 
-struct swift_lm {
-
-    var text = "Hello, World!"
-}
-
 struct Constants {
-    static let alphanumericChars = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890".characters)    
+    static let alphanumericChars = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890".characters)
 }
 
 func loadCorpus(from path: String) -> [String] {

@@ -5,8 +5,6 @@ class swift_lmTests: XCTestCase {
     func testExample() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
-        XCTAssertEqual(swift_lm().text, "Hello, World!")
-        
         
         XCTAssertEqual(getChar(at: 3, from: "01234"), "3")
         XCTAssertEqual(getSubstring(of: "01234", from: 1, to: 3), "12")
