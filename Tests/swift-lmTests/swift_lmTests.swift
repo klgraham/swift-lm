@@ -21,6 +21,7 @@ class swift_lmTests: XCTestCase {
         XCTAssert(loadCorpus(from: "Tests/swift-lmTests/test_corpus.txt").contains("unmanned by the dark, Gared?\""))
         
         XCTAssertEqual(removeNonAlphanumericCharacters(from: "asdf$5^qwerty"), "asdf5qwerty")
+        XCTAssertEqual(tokenize("I like cheese.\nDo you?"), ["i", "like", "cheese", "do", "you"])
     }
 
 

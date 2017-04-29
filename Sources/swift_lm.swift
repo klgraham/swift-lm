@@ -6,6 +6,9 @@ struct swift_lm {
     var text = "Hello, World!"
 }
 
+struct Constants {
+    static let alphanumericChars = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890".characters)    
+}
 
 func loadCorpus(from path: String) -> [String] {
     var lines = [String]()
@@ -23,12 +26,17 @@ func loadCorpus(from path: String) -> [String] {
     return lines
 }
 
+
 func removeNonAlphanumericCharacters(from text: String) -> String {
-    let okayChars =
-        Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890".characters)
-//    Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890+-*=(),.:!_".characters)
-    return String(text.characters.filter {okayChars.contains($0) })
+    return String(text.characters.filter { Constants.alphanumericChars.contains($0) })
 }
+
+// split a string on \s, \n, \r, and \t and lowercase the text
+func tokenize(_ text: String) -> [String] {
+    let words = text.components(separatedBy: .whitespacesAndNewlines)
+    return words.flatMap { $0.components(separatedBy: "\t") }.map { removeNonAlphanumericCharacters(from: $0.lowercased()) }
+}
+    
 
 func getStringIndex(at index: Int, of text: String) -> String.Index {
     return text.index(text.startIndex, offsetBy: index)
