@@ -16,16 +16,22 @@ class swift_lmTests: XCTestCase {
         XCTAssertEqual(insert("$", into: "012345", at: 3), "012$345")
         
         XCTAssert(!loadCorpus(from: "Tests/swift-lmTests/test_corpus.txt").isEmpty)
-        XCTAssert(loadCorpus(from: "Tests/swift-lmTests/test_corpus.txt").contains("unmanned"))
+        XCTAssert(loadCorpus(from: "Tests/swift-lmTests/test_corpus.txt").contains("henry"))
         
         XCTAssertEqual(removeNonAlphanumericCharacters(from: "asdf$5^qwerty"), "asdf5qwerty")
         XCTAssertEqual(tokenize("I like cheese.\nDo you?"), ["i", "like", "cheese", "do", "you"])
         XCTAssertEqual(countWordsIn(["i", "like", "like", "do", "do"]), ["like": 2, "do": 2, "i": 1])
         
-        let model = UnigramModel(corpus: "/Users/klogram/data/hp/hp1.txt")
-//        print(model.getWordCounts())
+        let unigramModel = UnigramModel(corpus: "Tests/swift-lmTests/test_corpus.txt")
+        XCTAssertEqual(unigramModel.getFrequencyOf("henry"), 6)
+        XCTAssertEqual(unigramModel.getFrequencyOf("a"), 3)
+        XCTAssertEqual(unigramModel.getFrequencyOf("sam"), 2)
+        XCTAssertEqual(unigramModel.probabilityOf("outrivaled"), 0)
         
-//        print(model.getCorrectionsFor("harry"))
+        let spellChecker = SpellChecker(corpus: "data/big.txt")
+        XCTAssert(spellChecker.getCorrectionsFor("librari").contains("library"))
+        
+        
     }
 
 

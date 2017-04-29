@@ -122,10 +122,21 @@ struct UnigramModel {
         wordCounts = countWordsIn(words)
     }
     
+    func getFrequencyOf(_ word: String) -> Int {
+        if let frequency = wordCounts[word] {
+            return frequency
+        } else {
+            return 0
+        }
+    }
+    
     func getWordCounts() -> [String: Int] {
         return wordCounts
     }
     
+    mutating func setMaxCorrections(to n: Int) {
+        maxCorrections = n
+    }
     
     func vocabContains(_ word: String) -> Bool {
         if let _ = wordCounts[word] {
@@ -218,5 +229,22 @@ struct UnigramModel {
         } else {
             return 0
         }
+    }
+}
+
+class SpellChecker {
+    private var model: UnigramModel
+    
+    init(corpus: String, maxCorrections: Int) {
+        model = UnigramModel(corpus: corpus)
+        model.setMaxCorrections(to: maxCorrections)
+    }
+    
+    convenience init(corpus: String) {
+        self.init(corpus: corpus, maxCorrections: 3)
+    }
+    
+    func getCorrectionsFor(_ word: String) -> [String] {
+        return model.getCorrectionsFor(word)
     }
 }
