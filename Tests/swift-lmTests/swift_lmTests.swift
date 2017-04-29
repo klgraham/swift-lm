@@ -21,6 +21,11 @@ class swift_lmTests: XCTestCase {
         XCTAssertEqual(removeNonAlphanumericCharacters(from: "asdf$5^qwerty"), "asdf5qwerty")
         XCTAssertEqual(tokenize("I like cheese.\nDo you?"), ["i", "like", "cheese", "do", "you"])
         XCTAssertEqual(countWordsIn(["i", "like", "like", "do", "do"]), ["like": 2, "do": 2, "i": 1])
+        
+        let model = UnigramModel(corpus: "/Users/klogram/data/hp/hp1.txt")
+//        print(model.getWordCounts())
+        
+//        print(model.getCorrectionsFor("harry"))
     }
 
 
